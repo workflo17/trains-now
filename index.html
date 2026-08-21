@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trains Now | Every subway train in New York, live</title>
+<meta name="description" content="Every train the MTA is reporting right now, drawn on the line it is running on and moving between stations as the feed updates. No app, no key, no account.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚇</text></svg>">
+<link rel="preconnect" href="https://api-endpoint.mta.info">
+<link rel="preconnect" href="https://tiles.openfreemap.org">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div id="map"></div>
+
+<header class="head">
+  <div class="mark">
+    <span class="bullet">T</span>
+    <div>
+      <h1>Trains Now</h1>
+      <p>Every subway train the MTA is reporting</p>
+    </div>
+  </div>
+  <div class="live">
+    <b id="count">--</b><span>trains moving</span>
+    <i class="pip" id="pip"></i><span id="age">connecting</span>
+  </div>
+</header>
+
+<aside class="rail">
+  <h2>Lines</h2>
+  <div class="lines" id="lines"></div>
+  <div class="detail" id="detail">
+    <p class="hint">Click a train to see where it is going. Every dot is a real train, placed at
+      the station it is at or on the track between the last station and the next one.</p>
+  </div>
+  <p class="fine">Positions come from the MTA's public realtime feed, refreshed every 25 seconds.
+    The feed reports the station a train is at or heading for, not a coordinate, so a train in
+    motion is drawn along the line between the two. Each route is drawn from one representative
+    shape in the published schedule, so a branch a train rarely takes may be missing from the
+    line even when the train is on it. Tiles by OpenFreeMap from OpenStreetMap.
+    Built by <a href="https://donflo.vercel.app">Don Florencio</a>.</p>
+</aside>
+
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

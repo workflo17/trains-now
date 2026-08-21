@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# No build and no test suite: a static page, a prebuilt data file and one Python
+# script. What CI can usefully do is catch a syntax error and confirm the data
+# file still has the shape the page expects.
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Parse the JavaScript
+        run: node --check app.js
+
+      - name: Parse the build script
+        run: python -m py_compile tools/build_static.py
+
+      - name: The prebuilt data still has what the page reads
+        run: |
+          node -e "
+            const d = require('./data/subway.json');
+            for (const k of ['stops', 'routes', 'shapes', 'seq']) {
+              if (!d[k]) { console.error('subway.json is missing ' + k); process.exit(1); }
+            }
+            console.log('stops', Object.keys(d.stops).length);
+            console.log('routes', Object.keys(d.routes).length);
+            console.log('shapes', Object.keys(d.shapes).length);
+          "
+
+      - name: Every local link resolves
+        run: |
+          for f in $(grep -oE '(href|src)="[^":]+"' index.html | cut -d'"' -f2); do
+            [ -e "${f#/}" ] || { echo "missing: $f"; exit 1; }
+          done
+          echo "all local references exist"
