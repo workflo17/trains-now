@@ -1,5 +1,7 @@
 # Trains Now
 
+[![CI](https://github.com/workflo17/trains-now/actions/workflows/ci.yml/badge.svg)](https://github.com/workflo17/trains-now/actions/workflows/ci.yml)
+
 Every train the MTA is currently reporting, on the line it is running, moving between stations.
 Live at [trains-now.vercel.app](https://trains-now.vercel.app).
 
