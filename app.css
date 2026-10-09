@@ -33,6 +33,10 @@ body{margin:0;background:var(--black);color:var(--white);font-family:var(--sans)
 .pip.on{background:var(--live);animation:beat 2.5s ease-out infinite}
 @keyframes beat{0%{box-shadow:0 0 0 0 rgba(0,204,106,.5)}70%{box-shadow:0 0 0 8px rgba(0,204,106,0)}100%{box-shadow:0 0 0 0 rgba(0,204,106,0)}}
 
+/* ---------------------------------------------------------------- embed (?embed) */
+.embed .mark,.embed .rail,.embed .maplibregl-ctrl-bottom-right{display:none}
+.embed .head{background:none;padding:10px 12px}
+
 /* ---------------------------------------------------------------- rail */
 .rail{position:absolute;top:70px;left:18px;bottom:18px;width:290px;z-index:5;background:rgba(19,20,23,.94);
   border:1px solid var(--line);border-radius:4px;padding:16px;display:flex;flex-direction:column;

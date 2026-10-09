@@ -118,6 +118,16 @@ const map = new maplibregl.Map({
 map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right');
 map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
 
+/* ?embed: the map alone, for a frame on another page (workflohq.com carries one). No
+   header, no rail, no wheel zoom, so the page around the frame keeps scrolling. */
+const EMBED = new URLSearchParams(location.search).has('embed');
+if (EMBED) {
+  document.body.classList.add('embed');
+  map.scrollZoom.disable();
+  map.dragRotate.disable();
+  map.touchZoomRotate.disableRotation();
+}
+
 /* ------------------------------------------------------------ placement */
 function station(id) {
   const s = state.data.stops[id] || state.data.stops[id.slice(0, -1)];
